@@ -1,18 +1,20 @@
 import com.sun.tools.attach.VirtualMachine.list
-
 import scala.util.control.Breaks.break
 import scala.collection.immutable
-object Task2 extends App{
+import scala.collection.mutable.ListBuffer
+import scala.util.Random
+
+object MinimalTasks extends App{
   {
     cylinderArea(4,3)
     isPrime(13)
-    val list = List(1, 2, 4, 8, 4)
-    reverse(list)
+    reverse(List(1, 2, 4, 8, 4))
+    uniqueSum(List(1 , 2 , 4 , 8 , 4 , 2))
+    extractRandomN(List(1, 2, 4, 8 , 4), 3)
   }
 
   def isPrime(n: Int): Boolean = {
     var Med: Int = n / 2
-    // var Counter: Int = 2
     var Flag: Int = 0
 
     if (n <= 1)
@@ -24,10 +26,10 @@ object Task2 extends App{
       }
     }
   if (Flag == 0) {
-   println(n+ "is Prime")
+   println("True")
     return true
   } else {
-    println(n + "is not Prime")
+    println("False")
     return false
   }
   }
@@ -42,4 +44,26 @@ object Task2 extends App{
   def reverse(list: List[Int]): Unit = {
     println(list.reverse)
   }
+ def uniqueSum(list: List[Int]): Unit = {
+  var sum : Int = 0
+  val uniqueList = list.to(collection.mutable.Set)
+  uniqueList.foreach(sum+= _)
+  println(sum)
+ }
+
+  def extractRandomN(list: List[Int], Nr: Int) : Unit = {
+    var rand = new Random
+    var randList = ListBuffer[Int](Nr)
+    var randNr : Int = 0
+    for(i <- 0 to Nr-1){
+      randNr = list(rand.nextInt(Nr))
+      while (randList.contains(randNr)){
+        randNr = list(rand.nextInt(Nr))
+      }
+      randList += randNr
+    }
+    println(randList)
+  }
+
+
 }

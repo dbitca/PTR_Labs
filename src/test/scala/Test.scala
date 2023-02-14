@@ -1,10 +1,9 @@
 import Week2.MinimalTasks
 import org.scalatest.funsuite.AnyFunSuite
+import Week1.HelloPtr
 
 class Test extends AnyFunSuite {
-    val minimalFunctions = new MinimalTasks
-
-  test("Testing main class for Week1") {
-    assert(minimalFunctions.isPrime(3) == true)
+  test("Testing HelloPtr class for Week1") {
+    assert(HelloPtr.sayHello("Hello PTR!") == "Hello PTR!")
   }
 }

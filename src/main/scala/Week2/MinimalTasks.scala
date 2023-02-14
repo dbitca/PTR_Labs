@@ -44,6 +44,7 @@ object MinimalTasks extends App{
   def reverse(list: List[Int]): Unit = {
     println(list.reverse)
   }
+
  def uniqueSum(list: List[Int]): Unit = {
   var sum : Int = 0
   val uniqueList = list.to(collection.mutable.Set)

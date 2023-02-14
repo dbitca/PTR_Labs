@@ -1,9 +1,11 @@
+package Week2
 import com.sun.tools.attach.VirtualMachine.list
+
+import scala.:+
 import scala.util.control.Breaks.break
 import scala.collection.immutable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
-
 object MinimalTasks extends App{
   {
     cylinderArea(4,3)
@@ -11,6 +13,7 @@ object MinimalTasks extends App{
     reverse(List(1, 2, 4, 8, 4))
     uniqueSum(List(1 , 2 , 4 , 8 , 4 , 2))
     extractRandomN(List(1, 2, 4, 8 , 4), 3)
+    firstFibonacciElements(7)
   }
 
   def isPrime(n: Int): Boolean = {
@@ -66,5 +69,17 @@ object MinimalTasks extends App{
     println(randList)
   }
 
-
+  def firstFibonacciElements(n : Int) : Unit ={
+    var fib = Array[Int](0, 1)
+    val result = n match{
+      case 1 => print(fib(0))
+      case 2 => print(fib.mkString(", "))
+      case _ => {
+        for(i <- 2 until n){
+          fib = fib :+ fib(i-1) + fib(i-2)
+        }
+        print(fib.mkString(", "))
+      }
+    }
+  }
 }

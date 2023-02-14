@@ -5,6 +5,8 @@ object MainTasks extends App {
     removeConsecutiveDuplicates(List(1, 2, 2, 2, 4, 8, 4))
     lineWords(List("Hello", "Alaska", "Dad", "Peace"))
     groupAnagrams(List("eat", "tea", "tan", "ate", "nat", "bat"))
+    encode("lorem", 3)
+    decode("oruhp", 3)
   }
 
   def removeConsecutiveDuplicates(list: List[Int]): Unit = {
@@ -29,7 +31,19 @@ object MainTasks extends App {
     })
     println
   }
+  def encode (plaintext: String, key: Int): Unit ={
+    for (c <- plaintext){
+      print((c.toInt + key).toChar)
+    }
+    println()
+  }
 
+  def decode (cipher: String, key: Int): Unit ={
+    for (c <- cipher){
+      print((c.toInt - key).toChar)
+    }
+    println
+  }
   def groupAnagrams(list: List[String]): Unit = {
     var map: Map[String, List[String]] = Map.empty[String, List[String]]
 

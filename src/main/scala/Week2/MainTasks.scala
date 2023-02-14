@@ -4,12 +4,13 @@ object MainTasks extends App {
   {
     removeConsecutiveDuplicates(List(1, 2, 2, 2, 4, 8, 4))
     lineWords(List("Hello", "Alaska", "Dad", "Peace"))
-    groupAnagrams(List("eat", "tea", "tan", "ate", "nat", "bat"))
     encode("lorem", 3)
     decode("oruhp", 3)
+    groupAnagrams(List("eat", "tea", "tan", "ate", "nat", "bat"))
   }
 
   def removeConsecutiveDuplicates(list: List[Int]): Unit = {
+    println("Main Task 1")
     print(list(0) + " ")
     for (i <- 1 until list.length) {
       if (list(i) != list(i - 1))
@@ -19,7 +20,7 @@ object MainTasks extends App {
   }
 
   def lineWords(list: List[String]): Unit = {
-
+    println("Main Task 2")
     val rowOne: List[Char] = List('q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p')
     val rowTwo: List[Char] = List('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l')
     val rowThree: List[Char] = List('z', 'x', 'c', 'v', 'b', 'n', 'm')
@@ -32,6 +33,7 @@ object MainTasks extends App {
     println
   }
   def encode (plaintext: String, key: Int): Unit ={
+    println("Main Task 3 -> encode")
     for (c <- plaintext){
       print((c.toInt + key).toChar)
     }
@@ -39,12 +41,14 @@ object MainTasks extends App {
   }
 
   def decode (cipher: String, key: Int): Unit ={
+    println("Main Task 3 -> decode")
     for (c <- cipher){
       print((c.toInt - key).toChar)
     }
     println
   }
   def groupAnagrams(list: List[String]): Unit = {
+    println("Main Task 4")
     var map: Map[String, List[String]] = Map.empty[String, List[String]]
 
     for (i <- 0 until list.length) {

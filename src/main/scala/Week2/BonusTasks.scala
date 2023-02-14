@@ -9,6 +9,7 @@ object  BonusTasks extends App {
   }
 
   def commonPrefix(list: List[String]): Unit = {
+    println("Bonus Task 1")
     var temp = ""
     var i = 0
     var flag = true
@@ -21,9 +22,10 @@ object  BonusTasks extends App {
         flag = false
       }
     }
-    println(list + " -> " + temp)
+    println(list.mkString(", ") + " -> " + temp)
   }
   def factorize(nr : Int): Unit = {
+    println("Bonus Task 2")
     var factors = List[Int]()
     var  n = nr
     for (i <- 2 to n) {
@@ -32,7 +34,9 @@ object  BonusTasks extends App {
         n = n / i
       }
     }
-      for (f <- factors)
-        println(f)
-    }
+      for (f <- factors) {
+        print(f + " ")
+      }
+    println
+  }
   }

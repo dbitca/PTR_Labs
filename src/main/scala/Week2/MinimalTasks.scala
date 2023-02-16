@@ -1,6 +1,5 @@
 package Week2
 import com.sun.tools.attach.VirtualMachine.list
-
 import scala.:+
 import scala.util.control.Breaks.break
 import scala.collection.immutable

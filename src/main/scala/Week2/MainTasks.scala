@@ -64,5 +64,4 @@ object MainTasks extends App {
       println(s"$key -> ${values.mkString(", ")}")
     }
   }
-
 }

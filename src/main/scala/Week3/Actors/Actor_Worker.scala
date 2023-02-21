@@ -1,5 +1,4 @@
 package Week3.Actors
-
 import akka.actor.Actor
 
 class Actor_Worker extends Actor{

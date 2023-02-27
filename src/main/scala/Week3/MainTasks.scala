@@ -8,13 +8,13 @@ object MainTasks extends App {
   val mutex_Actor = system.actorOf(Props[Mutex_Actor], "mutex_Actor")
 
   {
-//    Task5("push", 10)
-//    Task5("push", 5)
-//    Task5("pop", None)
+    Task5("push", 10)
+    Task5("push", 5)
+    Task5("pop", None)
     Semaphore("create_semaphore", 3)
     Semaphore("acquire", None)
-//    Semaphore("acquire", None)
-//    Semaphore("acquire", None)
+    Semaphore("acquire", None)
+    Semaphore("acquire", None)
     Semaphore("release", None)
     Semaphore("release", None)
   }

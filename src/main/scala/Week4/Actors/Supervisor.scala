@@ -1,7 +1,7 @@
-package Week4
+package Week4.Actors
 
 import akka.actor.SupervisorStrategy._
-import akka.actor.{Actor, ActorSystem, OneForOneStrategy, Props, Terminated}
+import akka.actor.{Actor, OneForOneStrategy, Props, Terminated}
 
 import scala.concurrent.duration._
 
@@ -25,5 +25,8 @@ class Supervisor extends Actor{
         {
           println(s"Actor ${actor.path.name} has died!")
         }
+    case _ => {
+      println("I don't know what to do with this")
+    }
   }
 }

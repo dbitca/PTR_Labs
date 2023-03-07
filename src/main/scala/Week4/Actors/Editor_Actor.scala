@@ -1,13 +1,13 @@
 package Week4.Actors
 
-import akka.actor.{Actor, ActorRef}
+import akka.actor.{Actor, ActorLogging, ActorRef}
 
-class Editor_Actor (var next:ActorRef) extends Actor{
+class Editor_Actor (next:ActorRef) extends Actor with ActorLogging{
   override def receive: Receive ={
-    case SetNextActor(actor) =>
-      next = actor
+//    case SetNextActor(actor) =>
+//      next = actor
     case message: List[String] => {
-      println(message)
+//      println(message)
     var lowerCase = message.map(word => word.toLowerCase())
     var modifiedList = lowerCase.map(word =>
     if(word.contains('m') && word.contains('n')){
@@ -24,6 +24,10 @@ class Editor_Actor (var next:ActorRef) extends Actor{
       println(modifiedList)
         }
     }
+
+  override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
+    log.info("Restarting splitter")
+  }
 }
 case class SetNextActor(actor:ActorRef)
 

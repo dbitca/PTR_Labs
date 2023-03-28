@@ -1,11 +1,13 @@
 package Week1
 
-import akka.actor.{Actor, ActorLogging, Props}
+import Week2.Engagement_Ratio_Actor
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import io.circe.Json
 import io.circe.parser._
 
+import java.net.{HttpURLConnection, URL}
 import java.util
-class PrinterActor extends Actor with ActorLogging {
+class PrinterActor (next: ActorRef) extends Actor with ActorLogging {
   private val bad_words: Array[String] = Array(
     "arse", "arsehead", "arsehole", "ass", "asshole", "bastard", "bitch", "bloody", "bollocks", "brotherfucker",
     "bugger", "bullshit", "child-fucker", "Christ on a bike", "Christ on a cracker", "cock", "cocksucker", "crap",
@@ -14,10 +16,9 @@ class PrinterActor extends Actor with ActorLogging {
     "Jesus wept", "Jesus, Mary and Joseph", "kike", "motherfucker", "nigga", "nigra", "piss", "prick", "pussy", "shit",
     "shit ass", "shite", "sisterfucker", "slut", "son of a bitch", "son of a whore", "spastic", "sweet Jesus", "turd",
     "twat", "wanker", "fucking", "shitting")
-  override def receive: Receive = {
 
+  override def receive: Receive = {
     case tweetData: String =>
-      //     println(s"Received tweet data: $tweetData")
       val pattern = """"text":"(.+?)"""".r
       pattern.findFirstMatchIn(tweetData) match {
         case Some(matched) =>
@@ -29,7 +30,11 @@ class PrinterActor extends Actor with ActorLogging {
               .map(word => if (word.toLowerCase == bad_word.toLowerCase) replacement else word)
               .mkString(" ")
           }
-          println(s"Tweet from:  " + self.path.name + s" $tweetText")
+          next ! (tweetText, tweetData)
+
+          //            println(s"Tweet from:  " + self.path.name + s" $tweetText")
+          //          println(s"Emotional value of tweet from: " + self.path.name + " is: " + mean)
+          //          println(s"Engagement ratio of tweet from: " + self.path.name + " is: " + engagement_ratio)
           Thread.sleep(1000)
       }
     case None =>
@@ -41,7 +46,7 @@ class PrinterActor extends Actor with ActorLogging {
 }
 
 object PrinterActor {
-  def props(): Props = Props(new PrinterActor())
+  def props(next: ActorRef): Props = Props(new PrinterActor(next))
   case object Send
 }
 

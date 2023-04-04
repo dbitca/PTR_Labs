@@ -5,6 +5,8 @@ import Week2.Pool_Supervisor.Print
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor.{Actor, ActorRef, OneForOneStrategy, Props}
 import akka.protobufv3.internal.TextFormat.printer
+import akka.stream.impl.fusing.Batch
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import java.time.InstantSource.system
@@ -19,10 +21,12 @@ class Pool_Supervisor extends Actor{
   var nextPrinterIndex = 0;
   var nrofActors = 3;
 
-  val sentimentScoreActor = context.actorOf(Sentiment_Score_Actor.props(), "sentimentScoreActor")
-  val engagementRatioActor = context.actorOf(Engagement_Ratio_Actor.props(sentimentScoreActor), "engagementRatioActor")
+  val batcher = context.actorOf(Batcher.props(), "batcher")
+  val aggregator = context.actorOf(Aggregator.props(batcher), "aggregator");
+  val sentimentScoreActor = context.actorOf(Sentiment_Score_Actor.props(aggregator), "sentimentScoreActor")
+  val engagementRatioActor = context.actorOf(Engagement_Ratio_Actor.props(aggregator), "engagementRatioActor")
   var printers: Seq[ActorRef] = (1 to nrofActors).map { i =>
-    val printer = context.actorOf(PrinterActor.props(engagementRatioActor), s"printer$i")
+    val printer = context.actorOf(PrinterActor.props(aggregator), s"printer$i")
     printer
   }
 
@@ -39,6 +43,8 @@ class Pool_Supervisor extends Actor{
       currentNrofTweets +=1
       val printer = printers (nextPrinterIndex)
       printer ! message
+      sentimentScoreActor ! message
+      engagementRatioActor ! message
       //    context.system.scheduler.scheduleOnce(2.seconds, self, (message: String))
     }
 
